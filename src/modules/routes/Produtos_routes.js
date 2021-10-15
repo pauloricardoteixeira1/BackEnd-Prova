@@ -4,7 +4,6 @@ const router = express.Router()
 const authMiddleware = require('../middleware/auth');
 const Produtos_Controller = require("../controls/Produtos_Controller")
 
-router.use(express.json()); 
 
 //listar
 router.get('/produtosReadAll',authMiddleware, Produtos_Controller.listarTodos);

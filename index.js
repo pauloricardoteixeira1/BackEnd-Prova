@@ -7,7 +7,6 @@ const rotas_servico    = require('./src/modules/routes/Servicos_routes');
 
 const routeAuth = require('./src/modules/controls/Auth/route_Auth');
 const mongoose = require('mongoose');
-//const jwt      = require('jsonwebtoken');
 
 const app = express();
 const porta = 3000;

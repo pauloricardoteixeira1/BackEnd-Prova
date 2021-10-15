@@ -1,7 +1,7 @@
 const produtos = require('../models/produto');
 
 class Produtos_Controller{
-    async novo(){
+    async novo(req,res){
         if(!req.body.nome|| !req.body.empresa){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    

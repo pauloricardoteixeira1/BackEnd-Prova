@@ -22,7 +22,7 @@ const EmpresaSchema = new Schema({
     produtos: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'ProdutosModel',
+            ref: 'ProdutoModel',
         }
     ]
 

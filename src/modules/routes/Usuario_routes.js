@@ -4,8 +4,7 @@ const router = express.Router()
 const authMiddleware = require('../middleware/auth');
 const Usuario_Controller = require("../controls/Usuario_Controller")
 
-router.use(express.json()); 
-//router.use(authMiddleware);
+
 // root
 router.get('/',authMiddleware, function(req,res){ res.send("Raiz do projeto")});
 

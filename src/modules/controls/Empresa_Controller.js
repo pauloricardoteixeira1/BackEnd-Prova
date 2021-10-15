@@ -1,41 +1,67 @@
 const empresa = require('../models/empresa');
 
 class Empresa_Controller{
-    async novo(){
+    async novo(req,res){
         if(!req.body.nome|| !req.body.cnpj || !req.body.usuarioId ){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await empresa.create({...req.body, usuarioId: req.body.usuarioId});
+            const data = await empresa.create({...req.body, usuario: req.body.usuarioId});
             return res.json({data});
         } 
     }
     
     async listarTodos(req,res){
-        const data = await empresa.find({}).populate('usuarioID');
-        return res.json(data);
-    }
-
-    async listarUnico(req,res){
-        if(!req.body.id){
+        if(!req.body.usuarioId ){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await empresa.find({_id:req.body.id});
+            const data = await empresa.find({usuario:req.body.usuarioId}).populate('usuario');
+            return res.json(data);
+        } 
+        
+    }
+
+    async listarUnico(req,res){
+        if(!req.body.id || !req.body.usuarioId){
+            res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
+            return;    
+        }else{
+            const data = await empresa.find({_id:req.body.id,usuario:req.body.usuarioId });
             return res.json(data);
         }
         
     }
 
     async listarProdutos(req,res){
-        if(!req.body.id){
+        if(!req.body.id || !req.body.usuarioId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
-            const data = await empresa.find({_id:req.body.id})
+            const data = await empresa.find(
+                {
+                    _id:req.body.id,
+                    usuario:req.body.usuarioId
+                }).populate('produtos');
+                
+            console.log(data)
             return res.json(data); 
         }
-        
+    }
+
+    async listarServicos(req,res){
+        if(!req.body.id || !req.body.usuarioId, !req.body.produtoId){
+            res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
+            return;
+        }else{
+            const data = await empresa.find(
+                {
+                    _id:req.body.id,
+                    usuario:req.body.usuarioId,
+                    produtos:req.body.produtoId
+                }).populate('produtos');
+            return res.json(data); 
+        }
     }
 
     async atualizar(req,res){

@@ -1,7 +1,7 @@
 const servicos = require('../models/servico');
 
 class Servicos_Controller{
-    async novo(){
+    async novo(req,res){
         if(!req.body.nome|| !req.body.produto){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
@@ -12,8 +12,14 @@ class Servicos_Controller{
     }
     
     async listarTodos(req,res){
-        const data = await servicos.find({})
-        return res.json(data);
+        if(!req.body.usuarioId || !req.body.id  ){
+            res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
+            return;    
+        }else{
+            const data = await servicos.find({_id:req.body.id})
+            return res.json(data);
+        }
+        
     }
 
     async listarUnico(req,res){
