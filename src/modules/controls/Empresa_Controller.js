@@ -16,7 +16,7 @@ class Empresa_Controller{
         return res.json(data);
     }
 
-    async listaUnico(req,res){
+    async listarUnico(req,res){
         if(!req.body.id){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
@@ -32,7 +32,7 @@ class Empresa_Controller{
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
-            const data = await empresa.find({_id:id})
+            const data = await empresa.find({_id:req.body.id})
             return res.json(data); 
         }
         

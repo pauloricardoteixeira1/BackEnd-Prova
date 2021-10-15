@@ -1,4 +1,4 @@
-const servicos = require('../models/servicos');
+const servicos = require('../models/servico');
 
 class Servicos_Controller{
     async novo(){
@@ -16,7 +16,7 @@ class Servicos_Controller{
         return res.json(data);
     }
 
-    async listarServicos(req,res){
+    async listarUnico(req,res){
         if(!req.body.id){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;

@@ -1,4 +1,4 @@
-const produtos = require('../models/produtos');
+const produtos = require('../models/produto');
 
 class Produtos_Controller{
     async novo(){
