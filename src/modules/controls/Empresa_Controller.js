@@ -43,8 +43,6 @@ class Empresa_Controller{
                     _id:req.body.id,
                     usuario:req.body.usuarioId
                 }).populate('produtos');
-                
-            console.log(data)
             return res.json(data); 
         }
     }

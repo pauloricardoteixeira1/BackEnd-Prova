@@ -1,4 +1,5 @@
 const servicos = require('../models/servico');
+const prod = require('../models/produto');
 
 class Servicos_Controller{
     async novo(req,res){
@@ -7,6 +8,15 @@ class Servicos_Controller{
             return;    
         }else{
             const data = await servicos.create(req.body);
+            await prod.findOneAndUpdate(
+                {"_id": req.body.produto},
+                {
+                    $push:{
+                        "produto": data._id,
+                    },
+                }
+            );
+            
             return res.json({data});
         } 
     }
