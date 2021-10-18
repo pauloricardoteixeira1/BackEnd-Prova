@@ -17,8 +17,8 @@ router.post('/empresaCreate',authMiddleware, Empresa_Controller.novo);
 // atualizar
 router.post('/empresaUpdate',authMiddleware, Empresa_Controller.atualizar);
 
-// atualizar
-router.post('/empresaRemover',authMiddleware, Empresa_Controller.remover);
+// atualizar - realizar deleção em cascada
+router.delete('/empresaRemover',authMiddleware, Empresa_Controller.remover);
 
 
 module.exports = router

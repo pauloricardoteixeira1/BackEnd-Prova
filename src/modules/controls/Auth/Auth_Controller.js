@@ -1,4 +1,6 @@
 const usuario = require("../../models/usuario");
+const cargo =  require("../../models/cargo");
+
 const jwt = require("jsonwebtoken");
 const authConfig = require('../../../../config/auth');
 
@@ -17,14 +19,13 @@ class Auth_Controller {
         }else{
             const nome  = req.body.nome;
             const senha = req.body.senha;
-            const user = await usuario.findOne({nome}).select('+senha');
+            const user = await usuario.findOne({nome}).select('+senha').populate('cargo');
             if(!user){
                 return res.status(400).send('Error: Usuário não encontrado'); 
             }else{
                 if(senha!=user.senha){
                     return res.status(400).send('Error: Senha incorreta'); 
                 }else{
-
                     user.senha = '';
                     const token = generateToken({id:user.id});
                     res.send({user,token});

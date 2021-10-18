@@ -13,6 +13,11 @@ const ServicoSchema = new Schema({
         ref: 'ProdutosModel',
         required: true
     },
+    empresa:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'EmpresaModel',
+        required: true
+    },
     valor:{
         type:Number,
     }

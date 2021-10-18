@@ -1,73 +1,81 @@
 const empresa = require('../models/empresa');
+const prods =require('../models/produto');
+const servs = require('../models/servico');
 
 class Empresa_Controller{
     async novo(req,res){
-        if(!req.body.nome|| !req.body.cnpj || !req.body.usuarioId ){
+        if(!req.body.nome|| !req.body.cnpj || !req.userId ){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await empresa.create({...req.body, usuario: req.body.usuarioId});
-            return res.json({data});
+
+            if(req.body.nome.length<= 100 && req.body.cnpja.length<= 14){
+                const data = await empresa.create({...req.body, usuario: req.userId});
+                return res.json({data});
+            }else{   
+                return res.status(400).json({erro:"400 - Um ou mais campos incoerentes"});;    
+            }
+            
         } 
     }
     
     async listarTodos(req,res){
-        if(!req.body.usuarioId ){
-            res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
+        if(!req.userId ){
+            res.status(401).json({erro:"401 - Não autorizado"}); 
             return;    
         }else{
-            const data = await empresa.find({usuario:req.body.usuarioId}).populate('usuario');
+            const data = await empresa.find({usuario:req.userId}).populate('usuario');
             return res.json(data);
         } 
         
     }
 
     async listarUnico(req,res){
-        if(!req.body.id || !req.body.usuarioId){
+        if(!req.body.id || !req.userId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await empresa.find({_id:req.body.id,usuario:req.body.usuarioId });
+            const data = await empresa.find({_id:req.body.id,usuario:req.userId });
             return res.json(data);
         }
         
     }
 
     async listarProdutos(req,res){
-        if(!req.body.id || !req.body.usuarioId){
+        if(!req.body.id || !req.userId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
             const data = await empresa.find(
                 {
                     _id:req.body.id,
-                    usuario:req.body.usuarioId
+                    usuario:req.userId
                 }).populate('produtos');
             return res.json(data); 
         }
     }
 
     async listarServicos(req,res){
-        if(!req.body.id || !req.body.usuarioId, !req.body.produtoId){
+        if(!req.body.id || !req.userId, !req.body.produtoId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
-            const data = await empresa.find(
+            const data = await servs.find(
                 {
-                    _id:req.body.id,
-                    usuario:req.body.usuarioId,
+                    usuario:req.userId,
+                    empresa:req.body.empresaId,
                     produtos:req.body.produtoId
-                }).populate('produtos');
+                });
             return res.json(data); 
         }
     }
 
     async atualizar(req,res){
-        if(!req.body.id || !req.body.nome|| !req.body.cnpj ){
+        if(!req.userId ||!req.body.empresaId || !req.body.nome|| !req.body.cnpj ){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
-            const id    = req.body.id;
+            const id    = req.body.empresaId;
             const nome  = req.body.nome;
             const cnpj  = req.body.cnpj;
             const data  = await empresa.updateOne({_id:id},{
@@ -87,6 +95,9 @@ class Empresa_Controller{
             return;
         }else{
             const id = req.body.id;
+            
+            await prods.deleteMany({empresa:id});
+            await servs.deleteMany({empresa:id});
             const data = await empresa.deleteOne({_id:id});
             res.status(200).json(data)
             return;

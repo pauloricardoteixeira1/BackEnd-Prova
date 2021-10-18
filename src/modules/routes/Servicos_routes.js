@@ -15,8 +15,8 @@ router.post('/servicosCreate',authMiddleware, Servicos_Controller.novo);
 // atualizar
 router.post('/servicosUpdate',authMiddleware, Servicos_Controller.atualizar);
 
-// atualizar
-router.post('/servicosRemover',authMiddleware, Servicos_Controller.remover);
+// deletar
+router.delete('/servicosRemover',authMiddleware, Servicos_Controller.remover);
 
 
 module.exports = router

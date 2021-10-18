@@ -21,6 +21,11 @@ const UsuarioSchema = new Schema({
         required:true,
         select: false,
 
+    },
+    cargo:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CargoModel',
+        required: true
     }
 });
 

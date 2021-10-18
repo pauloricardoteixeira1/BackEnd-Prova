@@ -3,30 +3,36 @@ const prod = require('../models/produto');
 
 class Servicos_Controller{
     async novo(req,res){
-        if(!req.body.nome|| !req.body.produto){
+        if(!req.body.nome|| !req.body.produto || ! req.body.empresa){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await servicos.create(req.body);
-            await prod.findOneAndUpdate(
-                {"_id": req.body.produto},
-                {
-                    $push:{
-                        "produto": data._id,
-                    },
-                }
-            );
+            if(req.body.nome.length>3){
+                const data = await servicos.create(req.body);
+                await prod.findOneAndUpdate(
+                    {"_id": req.body.produto},
+                    {
+                        $push:{
+                            "servicos": [data._id],
+                        },
+                    }
+                );
+                return res.json({data});
+            }else{
+                return res.status(400).json({erro:"400 - Um ou mais campos incoerentes"}); 
+            }
             
-            return res.json({data});
+            
+            
         } 
     }
     
     async listarTodos(req,res){
-        if(!req.body.usuarioId || !req.body.id  ){
+        if(!req.userId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await servicos.find({_id:req.body.id})
+            const data = await servicos.find({})
             return res.json(data);
         }
         
@@ -37,7 +43,7 @@ class Servicos_Controller{
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
-            const data = await servicos.find({_id:id})
+            const data = await servicos.find({_id:req.body.id})
             return res.json(data); 
         }
         
@@ -50,11 +56,13 @@ class Servicos_Controller{
         }else{
             const id    = req.body.id;
             const nome  = req.body.nome;
+            const empresa = req.body.empresa;
             const produto  = req.body.produto;
             const data  = await servicos.updateOne({_id:id},{
                 $set: {
                     nome: nome,
                     produto: produto,
+                    empresa: empresa
                 }
             })
             res.status(200).json(data)
