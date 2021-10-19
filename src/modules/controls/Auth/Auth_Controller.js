@@ -27,7 +27,7 @@ class Auth_Controller {
                     return res.status(400).send('Error: Senha incorreta'); 
                 }else{
                     user.senha = '';
-                    const token = generateToken({id:user.id});
+                    const token = generateToken({id:user.id,cargo:user.cargo.nome});
                     res.send({user,token});
                 }
             }

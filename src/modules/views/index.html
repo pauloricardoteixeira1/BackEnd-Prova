@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+  <div class="jumbotron ">
+    <h1>Teste BackEnd</h1>
+    <pre class="text-left">
+            Estudo-JS
+
+            Back-end (Node.js) O objetivo é construir uma aplicação que possua cadastro de usuários e autenticação, e estes usuários poderão realizar cadastro de empresas, produtos e serviços, assim como listar, editar e deletar.
+            As empresas podem conter um ou mais produtos, assim como cada produto pode conter um ou mais serviços.
+            O usuario deve ver somente suas empresas e produtos.
+        
+            Empresas (GET/POST/UPDATE/DELETE): Deve conter nome da empresa (tamanho maximo 100 caracter), cnpj (tamanho maximo 14 caracter), array de protudos.
+            Produtos (GET/POST/UPDATE/DELETE): Deve conter nome do protudo (tamanho maximo 50 caracter), array de serviços.
+            
+            É muito importante validar as informações recebidas antes de tomar qualquer ação. Deve-se utilizar o banco MongoDB.
+            Podendo este ser local, ou utilizar a versão gratúita do Atlas.
+            
+        Extra: Autenticação com JWT. Dockerfile para rodar aplicação. Gestão das variáveis de ambiente. Delegar permissões para usuario, assim podendo ter usuario que possa ver somente seus registros (Empresas, Produtos e Serviços) ou um "administrador" que tenha acesso a todos os registros do banco.
+        
+        Levaremos em consideração: Tempo, esforço e qualidade do código. Então, é muito importante manter o código limpo e organizado, para fácil entendimento. Qualquer extra não citado a cima também sera levado em consideração.
+        
+
+        </pre>
+  </div>
+
+  <div class="container jumbotron">
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Login</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="usuário" id="nome" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="senha" id="senha" type="text">
+        </div>
+        <button class="btn btn-primary" onclick="login()" type="submit">Logar!</button>
+      </div>
+      <div class="col-sm-8">
+        <pre id="console" style="font-family: Geneva, Tahoma, Geneva, Verdana, sans-serif;"></pre>
+      </div>
+    </div>
+  </div>
+  <div>
+
+  </br>
+  </div>
+
+  <div class="container jumbotron" >
+    <h3>Usuário</h3>
+    <div class="row">
+
+      <div class="col-sm-3">
+        <h3>Create</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome novo usuário" id="novo_username" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nova senha" id="nova_senha" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo cpf" id="novo_cpf" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo_cargo" id="novo_cargo" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="createuser()" type="submit">Criar!</button>
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Read</h3>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" onclick="listarTodosUsuarios()" type="submit">Listar tudo!</button>
+        </div>  
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Update</h3>
+
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador " id="update_identificador" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome novo " id="update_username" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nova senha" id="update_senha" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo cpf" id="update_cpf" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo_cargo" id="update_cargo" type="text">
+        </div>
+
+        <button class="btn btn-primary btn-block" onclick="updateUsuario()" type="submit">Atualizar!</button>
+      </div>
+      <div class="col-sm-3">
+        <h3>Deletar</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador" id="identificador_remover_usuario" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="deletarUsuario()" type="submit">Deletar!</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <script>
+
+
+
+    const http = axios.default;
+
+    async function login() {
+      var beare = "";
+      const nome = document.getElementById("nome").value;
+      const senha = document.getElementById("senha").value;
+      const res = await http.post("/login", { nome, senha });
+      beare = "Bearer " + res.data.token;
+      http.defaults.headers.common["authorization"] = beare;
+      document.getElementById("console").innerHTML = "Logado com Id: "+res.data.user._id; 
+      return false;
+    }
+
+    async function createuser() {
+      const nome = document.getElementById("novo_username").value;
+      const senha = document.getElementById("nova_senha").value;
+      const cpf = document.getElementById("novo_cpf").value;
+      const cargo = document.getElementById("novo_cargo").value;
+      const res = await http.post("/usuarioCreate", { nome, senha,cpf,cargo });
+      document.getElementById("console").innerHTML = "Logado com Id: "+res.data._id; 
+      return false;
+    }
+
+    async function listarTodosUsuarios() {
+      const res = await http.get("/usuarioReadAll");
+      const arr = res.data;
+      document.getElementById("console").innerHTML = "";
+      arr.forEach(element => {
+        document.getElementById("console").innerHTML +="Id: "+element._id+ " nome: "+element.nome+", cpf: "+element.cpf +"\n";
+      });
+       
+      return false;
+    }
+
+    async function updateUsuario() {
+      
+      const id = document.getElementById("update_identificador").value;
+      const nome = document.getElementById("update_username").value;
+      const senha = document.getElementById("update_senha").value;
+      const cpf = document.getElementById("update_cpf").value;
+      const cargo = document.getElementById("update_cargo").value;
+      const res = await http.put("/usuarioUpdate", {id, nome, senha,cpf,cargo });
+      
+      const element = res.data;
+      document.getElementById("console").innerHTML = "Atualização!";     
+      document.getElementById("console").innerHTML += "nome: "+element.nome+", cpf: "+element.cpf +"\n";
+      
+       
+      return false;
+    }
+
+    async function deletarUsuario() {
+      
+      const id = document.getElementById("identificador_remover_usuario").value;
+      const res = await http.delete("/usuarioRemover/"+id);
+      
+      const element = res.data;
+      document.getElementById("console").innerHTML = "Deleção realizada!";     
+       
+      return false;
+    }
+
+
+    async function empresas() {
+      const res = await http.get("/empresaReadAll");
+      return false;
+    }
+  </script>
+</body>
+
+</html>

@@ -10,8 +10,14 @@ class Empresa_Controller{
         }else{
 
             if(req.body.nome.length<= 100 && req.body.cnpja.length<= 14){
-                const data = await empresa.create({...req.body, usuario: req.userId});
-                return res.json({data});
+                const existe = await empresa.findOne({nome: req.body.nome, cnpj: req.body.cnpj});
+                if(!existe){
+                    const data = await empresa.create({...req.body, usuario: req.userId});
+                    return res.json({data});
+                }else{
+                    return res.status(400).json({erro:"Empresa já cadastrado"});
+                }
+                
             }else{   
                 return res.status(400).json({erro:"400 - Um ou mais campos incoerentes"});;    
             }

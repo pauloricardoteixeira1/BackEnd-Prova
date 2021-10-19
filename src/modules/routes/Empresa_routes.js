@@ -15,7 +15,7 @@ router.get('/empresaReadServices',authMiddleware, Empresa_Controller.listarServi
 router.post('/empresaCreate',authMiddleware, Empresa_Controller.novo);
 
 // atualizar
-router.post('/empresaUpdate',authMiddleware, Empresa_Controller.atualizar);
+router.patch('/empresaUpdate',authMiddleware, Empresa_Controller.atualizar);
 
 // atualizar - realizar deleção em cascada
 router.delete('/empresaRemover',authMiddleware, Empresa_Controller.remover);

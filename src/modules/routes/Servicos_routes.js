@@ -13,7 +13,7 @@ router.get('/servicosReadOne',authMiddleware, Servicos_Controller.listarUnico);
 router.post('/servicosCreate',authMiddleware, Servicos_Controller.novo);
 
 // atualizar
-router.post('/servicosUpdate',authMiddleware, Servicos_Controller.atualizar);
+router.patch('/servicosUpdate',authMiddleware, Servicos_Controller.atualizar);
 
 // deletar
 router.delete('/servicosRemover',authMiddleware, Servicos_Controller.remover);

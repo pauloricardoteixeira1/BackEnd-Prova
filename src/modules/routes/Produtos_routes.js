@@ -14,7 +14,7 @@ router.get('/produtosReadServices/:id',authMiddleware, Produtos_Controller.lista
 router.post('/produtosCreate',authMiddleware, Produtos_Controller.novo);
 
 // atualizar
-router.post('/produtosUpdate',authMiddleware, Produtos_Controller.atualizar);
+router.patch('/produtosUpdate',authMiddleware, Produtos_Controller.atualizar);
 
 // remover
 router.delete('/produtosRemover',authMiddleware, Produtos_Controller.remover);
