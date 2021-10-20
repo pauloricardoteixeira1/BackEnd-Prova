@@ -16,7 +16,7 @@ router.post('/servicosCreate',authMiddleware, Servicos_Controller.novo);
 router.patch('/servicosUpdate',authMiddleware, Servicos_Controller.atualizar);
 
 // deletar
-router.delete('/servicosRemover',authMiddleware, Servicos_Controller.remover);
+router.delete('/servicosRemover/:id/:produto',authMiddleware, Servicos_Controller.remover);
 
 
 module.exports = router

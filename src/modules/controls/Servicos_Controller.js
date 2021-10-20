@@ -69,13 +69,13 @@ class Servicos_Controller{
     }
 
     async remover(req,res){
-        if(!req.body.id || !req.body.produto){
+        if(!req.params.id || !req.params.produto){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;
         }else{
-            const id = req.body.id;
+            const id = req.params.id;
             await prod.findOneAndUpdate(
-                {"_id": req.body.produto},
+                {"_id": req.params.produto},
                 {
                     $pull:{
                         "servicos": id,

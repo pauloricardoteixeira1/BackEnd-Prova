@@ -19,6 +19,37 @@ Para fins de organização, optou-se por seguir o modelo MVC para a estruturaç�
 
 Foi disponibilizado um arquivo (Rotas) com o fim de facilitar os testes da api utilizando o aplicativo Insomnia. É necessario realizar a configuração do token como variável. O Login se encontra na rota de POST http://localhost:3000/login onde é necessário passar no corpo da requisição o nome e senha.  
 
+## Rotas Disponíveis 
+    Usuário
+    (POST) Criação de cargos:          /cargoCreate 
+    (POST) Criação de usuários:        /usuarioCreate
+    (GET) Leitura de todos usuários:   /usuarioReadAll
+    (PUT) Atualização de usuários:     /usuarioUpdate
+    (DELETE) Deleção de usuário        /usuarioRemover/:id
+
+    Empresa
+    (POST) Criação de empresa:         /empresaCreate
+    (GET) Leitura de todas empresas:   /empresaReadAll 
+    (GET) Leitura única de empresas:   /empresaReadOne/:id 
+    (GET) Leitura de produtos da empresa:   /empresaReadProducts/:id 
+    (GET) Leitura de serviços da empresa:   /empresaReadServices/:id/:produtoId
+    (PUT) Atualização de empresa:      /empresaUpdate
+    (DELETE) Deleção de empresa:       /empresaRemover/:id
+
+    Produto
+    (POST) Criação de produto:         /produtosCreate
+    (GET) Leitura de todos produtos:   /produtosReadAll
+    (GET) Leitura de serviços da produtos:   /produtosReadServices/:id
+    (PATCH) Atualização de produto:    /produtosUpdate
+    (DELETE) Deleção de produto:       /produtosRemover/:id/:empresa
+
+    Serviços
+    (POST) Criação de serviço:         /servicosCreate
+    (GET) Leitura de todos serviços:   /servicosReadAll
+    (PATCH) Atualização de serviço:    /servicosUpdate
+    (DELETE) Deleção de serviço:       /servicosRemover/:id/:produto
+
+
 ## Estudo-JS
 
 Back-end (Node.js) O objetivo é construir uma aplicação que possua cadastro de usuários e autenticação, e estes usuários poderão realizar cadastro de empresas, produtos e serviços, assim como listar, editar e deletar.
