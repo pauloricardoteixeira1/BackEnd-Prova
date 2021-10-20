@@ -56,13 +56,11 @@ class Servicos_Controller{
         }else{
             const id    = req.body.id;
             const nome  = req.body.nome;
-            const empresa = req.body.empresa;
             const produto  = req.body.produto;
             const data  = await servicos.updateOne({_id:id},{
                 $set: {
                     nome: nome,
                     produto: produto,
-                    empresa: empresa
                 }
             })
             res.status(200).json(data)
@@ -71,11 +69,19 @@ class Servicos_Controller{
     }
 
     async remover(req,res){
-        if(!req.body.id ){
+        if(!req.body.id || !req.body.produto){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;
         }else{
             const id = req.body.id;
+            await prod.findOneAndUpdate(
+                {"_id": req.body.produto},
+                {
+                    $pull:{
+                        "servicos": id,
+                    },
+                }
+            );
             const data = await servicos.deleteOne({_id:id});
             res.status(200).json(data)
             return;

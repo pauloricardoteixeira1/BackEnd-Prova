@@ -6,8 +6,15 @@ class cargo_Controller{
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await cargo.create({nome: req.body.nome});
-            return res.json({data});
+            const existe = await cargo.findOne({nome: req.body.nome});
+            if(!existe){
+                const data = await cargo.create({nome: req.body.nome});
+                return res.json({data});
+            }else{
+                return res.status(401).json({erro:"Já existe cargo com este nome"}); 
+            }
+           
+            
         } 
     }
     
