@@ -68,8 +68,7 @@ class Empresa_Controller{
         }else{
             const data = await servs.find(
                 {
-                    usuario:req.userId,
-                    empresa:req.params.empresaId,
+                    empresa:req.params.id,
                     produtos:req.params.produtoId
                 });
             return res.json(data); 

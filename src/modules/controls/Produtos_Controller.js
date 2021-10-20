@@ -66,12 +66,12 @@ class Produtos_Controller{
     }
 
     async remover(req,res){
-        if(!req.body.id ||!req.body.empresa){
+        if(!req.params.id ||!req.params.empresa){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;
         }else{
-            const id = req.body.id;
-            const empresa = req.body.empresa;
+            const id = req.params.id;
+            const empresa = req.params.empresa;
 
             await empresa_father.findOneAndUpdate(
                 {"_id": empresa},

@@ -17,7 +17,7 @@ router.post('/produtosCreate',authMiddleware, Produtos_Controller.novo);
 router.patch('/produtosUpdate',authMiddleware, Produtos_Controller.atualizar);
 
 // remover
-router.delete('/produtosRemover',authMiddleware, Produtos_Controller.remover);
+router.delete('/produtosRemover/:id/:empresa',authMiddleware, Produtos_Controller.remover);
 
 
 module.exports = router
