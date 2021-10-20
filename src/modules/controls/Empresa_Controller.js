@@ -9,7 +9,7 @@ class Empresa_Controller{
             return;    
         }else{
 
-            if(req.body.nome.length<= 100 && req.body.cnpja.length<= 14){
+            if(req.body.nome.length<= 100 && req.body.cnpj.length<= 14){
                 const existe = await empresa.findOne({nome: req.body.nome, cnpj: req.body.cnpj});
                 if(!existe){
                     const data = await empresa.create({...req.body, usuario: req.userId});
@@ -37,24 +37,24 @@ class Empresa_Controller{
     }
 
     async listarUnico(req,res){
-        if(!req.body.id || !req.userId){
+        if(!req.params.id || !req.userId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;    
         }else{
-            const data = await empresa.find({_id:req.body.id,usuario:req.userId });
+            const data = await empresa.find({_id:req.params.id,usuario:req.userId });
             return res.json(data);
         }
         
     }
 
     async listarProdutos(req,res){
-        if(!req.body.id || !req.userId){
+        if(!req.params.id || !req.userId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
             const data = await empresa.find(
                 {
-                    _id:req.body.id,
+                    _id:req.params.id,
                     usuario:req.userId
                 }).populate('produtos');
             return res.json(data); 
@@ -62,15 +62,15 @@ class Empresa_Controller{
     }
 
     async listarServicos(req,res){
-        if(!req.body.id || !req.userId, !req.body.produtoId){
+        if(!req.params.id || !req.userId, !req.params.produtoId){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"});  
             return;
         }else{
             const data = await servs.find(
                 {
                     usuario:req.userId,
-                    empresa:req.body.empresaId,
-                    produtos:req.body.produtoId
+                    empresa:req.params.empresaId,
+                    produtos:req.params.produtoId
                 });
             return res.json(data); 
         }
@@ -96,11 +96,11 @@ class Empresa_Controller{
     }
 
     async remover(req,res){
-        if(!req.body.id ){
+        if(!req.params.id ){
             res.status(400).json({erro:"400 - Um ou mais campos ausentes"}); 
             return;
         }else{
-            const id = req.body.id;
+            const id = req.params.id;
             
             await prods.deleteMany({empresa:id});
             await servs.deleteMany({empresa:id});

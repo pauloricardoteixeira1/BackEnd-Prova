@@ -67,10 +67,10 @@
   </div>
   <div>
 
-  </br>
+    </br>
   </div>
 
-  <div class="container jumbotron" >
+  <div class="container jumbotron">
     <h3>Usuário</h3>
     <div class="row">
 
@@ -95,8 +95,9 @@
         <h3>Read</h3>
         <div class="form-group">
           <button class="btn btn-primary btn-block" onclick="listarTodosUsuarios()" type="submit">Listar tudo!</button>
-        </div>  
+        </div>
       </div>
+
 
       <div class="col-sm-3">
         <h3>Update</h3>
@@ -119,6 +120,7 @@
 
         <button class="btn btn-primary btn-block" onclick="updateUsuario()" type="submit">Atualizar!</button>
       </div>
+
       <div class="col-sm-3">
         <h3>Deletar</h3>
         <div class="form-group">
@@ -129,8 +131,111 @@
     </div>
   </div>
 
+  <div>
 
+    </br>
+  </div>
 
+  <div class="container jumbotron">
+    <h3>Empresa</h3>
+    <div class="row">
+
+      <div class="col-sm-3">
+        <h3>Create</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome nova empresa" id="nova_empresa" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo cnpj" id="novo_cnpj" type="text">
+        </div>
+
+        <button class="btn btn-primary btn-block" onclick="createEmpresa()" type="submit">Criar!</button>
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Read</h3>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" onclick="listarTodosEmpresas()" type="submit">Listar tudo!</button>
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador Empresa" id="identificador_empresa_produtos" type="text">
+          <input class="form-control" placeholder="identificador Produto" id="identificador_empresa_produtos_servicos" type="text">
+          <button class="btn btn-primary btn-block" onclick="listarProdutosEmpresas()" type="submit">Listar Produtos!</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" onclick="listarServicosEmpresas()" type="submit">Listar Serviços!</button>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h3>Update</h3>
+
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador " id="update_identificador_empresa" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome novo " id="update_empresa" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="novo cnpj" id="update_cnpj" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="updateEmpresa()" type="submit">Atualizar!</button>
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Deletar</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador" id="identificador_remover_empresa" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="deletarEmpresa()" type="submit">Deletar!</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container jumbotron">
+    <h3>Produto</h3>
+    <div class="row">
+
+      <div class="col-sm-3">
+        <h3>Create</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome novo produto" id="nova_produto" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador da empresa " id="identificador_produtos_empresa" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="createProduto()" type="submit">Criar!</button>
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Read</h3>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" onclick="listarTodosProdutos()" type="submit">Listar tudo!</button>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h3>Update</h3>
+
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador " id="update_identificador_produto" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome novo " id="update_produto" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control" placeholder="nome empresa " id="update_produto_empresa" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="updateProduto()" type="submit">Atualizar!</button>
+      </div>
+
+      <div class="col-sm-3">
+        <h3>Deletar</h3>
+        <div class="form-group">
+          <input class="form-control" placeholder="identificador" id="identificador_remover_empresa" type="text">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="deletarEmpresa()" type="submit">Deletar!</button>
+      </div>
+    </div>
+  </div>
 
 
   <script>
@@ -146,7 +251,7 @@
       const res = await http.post("/login", { nome, senha });
       beare = "Bearer " + res.data.token;
       http.defaults.headers.common["authorization"] = beare;
-      document.getElementById("console").innerHTML = "Logado com Id: "+res.data.user._id; 
+      document.getElementById("console").innerHTML = "Logado com Id: " + res.data.user._id;
       return false;
     }
 
@@ -155,8 +260,8 @@
       const senha = document.getElementById("nova_senha").value;
       const cpf = document.getElementById("novo_cpf").value;
       const cargo = document.getElementById("novo_cargo").value;
-      const res = await http.post("/usuarioCreate", { nome, senha,cpf,cargo });
-      document.getElementById("console").innerHTML = "Logado com Id: "+res.data._id; 
+      const res = await http.post("/usuarioCreate", { nome, senha, cpf, cargo });
+      document.getElementById("console").innerHTML = "Usuário criado:  " + res.data._id;
       return false;
     }
 
@@ -165,43 +270,138 @@
       const arr = res.data;
       document.getElementById("console").innerHTML = "";
       arr.forEach(element => {
-        document.getElementById("console").innerHTML +="Id: "+element._id+ " nome: "+element.nome+", cpf: "+element.cpf +"\n";
+        document.getElementById("console").innerHTML += "Id: " + element._id + " nome: " + element.nome + ", cpf: " + element.cpf + "\n";
       });
-       
+
       return false;
     }
 
     async function updateUsuario() {
-      
+
       const id = document.getElementById("update_identificador").value;
       const nome = document.getElementById("update_username").value;
       const senha = document.getElementById("update_senha").value;
       const cpf = document.getElementById("update_cpf").value;
       const cargo = document.getElementById("update_cargo").value;
-      const res = await http.put("/usuarioUpdate", {id, nome, senha,cpf,cargo });
-      
+      const res = await http.put("/usuarioUpdate", { id, nome, senha, cpf, cargo });
+
       const element = res.data;
-      document.getElementById("console").innerHTML = "Atualização!";     
-      document.getElementById("console").innerHTML += "nome: "+element.nome+", cpf: "+element.cpf +"\n";
-      
-       
+      document.getElementById("console").innerHTML = "Atualização!";
+      document.getElementById("console").innerHTML += "nome: " + element.nome + ", cpf: " + element.cpf + "\n";
+
+
       return false;
     }
 
     async function deletarUsuario() {
-      
+
       const id = document.getElementById("identificador_remover_usuario").value;
-      const res = await http.delete("/usuarioRemover/"+id);
-      
+      const res = await http.delete("/usuarioRemover/" + id);
+
       const element = res.data;
-      document.getElementById("console").innerHTML = "Deleção realizada!";     
-       
+      document.getElementById("console").innerHTML = "Deleção realizada!";
+
       return false;
     }
 
+    async function createEmpresa() {
+      const nome = document.getElementById("nova_empresa").value;
+      const cnpj = document.getElementById("novo_cnpj").value;
+      const res = await http.post("/empresaCreate", { nome, cnpj });
+      document.getElementById("console").innerHTML = "Empresa criada " + res.data._id;
+      return false;
+    }
 
-    async function empresas() {
+    async function listarTodosEmpresas() {
       const res = await http.get("/empresaReadAll");
+      const arr = res.data;
+      document.getElementById("console").innerHTML = "";
+      arr.forEach(element => {
+        document.getElementById("console").innerHTML += "Id: " + element._id + " nome: " + element.nome + ", cnpj: " + element.cnpj + "\n";
+      });
+      return false;
+    }
+
+    async function listarProdutosEmpresas() {//
+      const id = document.getElementById("identificador_empresa_produtos").value;
+
+      const res = await http.get("/empresaReadProducts/"+id);
+      const arr = res.data;
+      document.getElementById("console").innerHTML = "";
+      arr.forEach(element => {
+        document.getElementById("console").innerHTML += "Id: " + element._id + " nome: " + element.nome + ", cnpj: " + element.cnpj + "\n";
+      });
+      return false;
+    }
+
+    async function listarServicosEmpresas() {
+      const id = document.getElementById("identificador_empresa_produtos").value;
+      const produtoId = document.getElementById("identificador_empresa_produtos_servicos").value;
+      const res = await http.get("/empresaReadServices/"+id+"/"+produtoId);
+      const arr = res.data;
+      document.getElementById("console").innerHTML = "";
+      arr.forEach(element => {
+        document.getElementById("console").innerHTML += "Id: " + element._id + " nome: " + element.nome + ", cnpj: " + element.cnpj + "\n";
+      });
+      return false;
+    }
+
+    async function updateEmpresa() {
+
+      const empresaId = document.getElementById("update_identificador_empresa").value;
+      const nome = document.getElementById("update_empresa").value;
+      const cnpj = document.getElementById("update_cnpj").value;
+      const res = await http.patch("/empresaUpdate", { empresaId, nome,  cnpj });
+
+      const element = res.data;
+      document.getElementById("console").innerHTML = "Atualização!";
+      document.getElementById("console").innerHTML += "nome: " + element.nome + ", cpf: " + element.cpf + "\n";
+
+
+      return false;
+    }
+
+    async function deletarEmpresa() {
+
+      const id = document.getElementById("identificador_remover_empresa").value;
+      const res = await http.delete("/empresaRemover/" + id);
+
+      const element = res.data;
+      document.getElementById("console").innerHTML = "Deleção realizada!";
+
+      return false;
+    }
+
+    async function createProduto() {
+      const nome = document.getElementById("nova_produto").value;
+      const empresa = document.getElementById("identificador_produtos_empresa").value;
+      const res = await http.post("/produtosCreate", { nome, empresa });
+      document.getElementById("console").innerHTML = "Empresa criada " + res.data._id;
+      return false;
+    }
+
+    async function listarTodosEmpresas() {
+      const res = await http.get("/produtosReadAll");
+      const arr = res.data;
+      document.getElementById("console").innerHTML = "";
+      arr.forEach(element => {
+        document.getElementById("console").innerHTML += "Id: " + element._id + " nome: " + element.nome + ", cnpj: " + element.cnpj + "\n";
+      });
+      return false;
+    }
+
+    async function updateProduto() {
+
+      const id = document.getElementById("update_identificador_produto").value;
+      const nome = document.getElementById("update_produto").value;
+      const empresa = document.getElementById("update_produto_empresa").value;
+      const res = await http.put("/usuarioUpdate", { id, nome, empresa });
+
+      const element = res.data;
+      document.getElementById("console").innerHTML = "Atualização!";
+      document.getElementById("console").innerHTML += "nome: " + element.nome + ", cpf: " + element.cpf + "\n";
+
+
       return false;
     }
   </script>
